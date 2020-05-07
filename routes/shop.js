@@ -3,11 +3,17 @@ const path = require('path');
 
 const rootDir = require('../util/path');
 const adminData = require('./admin');
-const shopRout = express.Router();
+const shopRoute = express.Router();
 
-shopRout.get('/', (req, res, next) => {
+shopRoute.get('/', (req, res, next) => {
     const products = adminData.products;
-    res.render('shop', {products: products, docTitle: 'Shop', path: 'shop'});
+    res.render('shop', {
+        products: products, 
+        docTitle: 'Shop', 
+        path: '/',
+        activeShop: true,
+        productCSS: true
+    });
 });
 
-module.exports = shopRout;
+module.exports = shopRoute;
