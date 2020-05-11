@@ -34,8 +34,34 @@ module.exports = class Cart {
             }
             cart.totalPrice += +itemPrice; 
             fs.writeFile(p, JSON.stringify(cart), err => {
+                console.log(err);
+            });
+        });
+    }
+
+    static deleteProduct(id, price) {
+        fs.readFile(p, (err, fileContent) => {
+            if (err) return;
+            console.log('itemPrice', price);
+            const updatedCart = {...JSON.parse(fileContent)};
+            const product = updatedCart.products.find(prod => prod.id === id);
+            if (!product) return;
+            const prodQty = product.qty;
+            updatedCart.products = updatedCart.products.filter(item => {
+                return item.id !== id;
+            });
+            updatedCart.totalPrice = updatedCart.totalPrice - (price * prodQty);
+            fs.writeFile(p, JSON.stringify(updatedCart), err => {
                 console.log('Couldnt write', err);
-            })
+            });
+        });
+    }
+
+    static getCart(cb) {
+        fs.readFile(p, (err, fileContent) => {
+            const cart = JSON.parse(fileContent);
+            if (err) cb(null);
+            cb(cart);
         });
     }
 }
