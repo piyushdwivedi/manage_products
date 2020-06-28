@@ -9,7 +9,7 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-  User.findById('5bab316ce0a7c75f783cb8a8')
+  User.findById('5ec9a04164f00008ac68e1ec')
     .then(user => {
       req.session.isLoggedIn = true;
       req.session.user = user;
